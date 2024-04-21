@@ -31,7 +31,20 @@ ESA WorldCover10m contains 11 land cover classes based on Sentinel-1 and Sentine
 
 ### Methodology
 
-How are you using this data to address the problem?
+**Flood extent mapping: **
+
+The areas affected by the flood are identified by calculating the difference between  pre-flood and post-flood images. 
+
+**Land cover impact assessment:**
+ By overlaying the flood extent layer with the land cover, the affected built-up areas and croplands are assessed.
+
+**Building damage assessment: **
+
+The random forest classification algorithm is applied to the Sentinel-2 multispectral imagery to extract buildings within the built-up areas. The accuracy is evaluated using a confusion matrix.
+
+**Population impact assessment: **
+
+By overlaying the flood extent map with the population grid, the application calculates the total number of individuals residing within the inundated areas.
 
 ### Interface
 
