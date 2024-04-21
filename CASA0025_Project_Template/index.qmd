@@ -2,11 +2,11 @@
 
 ## Project Summary
 
-Fill in the sections below to provide a brief summary of your project. Each section should have no more than 100 words. Do not edit any of the headings.
+This project develops a Google Earth Engine application to assess the impact of the severe flooding that occurred in Al Marj, Libya, in September 2023. The application integrates satellite imagery for flood mapping, land cover data for analyzing affected land cover types, and random forest classification to detect affected buildings. Additionally, it utilizes population grid data to estimate the number of people affected by the flood. The results provide a comprehensive assessment of the flood extent, affected land cover areas, impacted buildings, and the affected population, which is crucial for informing disaster response and management efforts. 
 
 ### Problem Statement
 
-What is the problem you’re trying to address using this application?
+In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood's impact is essential for effective disaster response and management. By leveraging remote sensing data and population grid information, this application aims to provide a comprehensive assessment of various aspects of the flood's impact. This enables emergency responders to identify and reach the most severely affected areas, and allows governments or international organizations to plan for long-term recovery and infrastructure restoration. Moreover, the framework of this model can be applied to other regions facing similar challenges.
 
 ### End User
 
