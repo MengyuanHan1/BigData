@@ -1,0 +1,521 @@
+# CASA00025 Group Project Title Here
+
+## Project Summary
+
+This project crafts an application within Google Earth Engine to evaluate the repercussions of the substantial flood event that transpired in Al Marj, Libya, during September 2023. The application integrates satellite imagery for flood mapping, land cover data for analyzing affected land cover types, and random forest classification to detect affected buildings. Additionally, it utilizes population grid data to estimate the number of people affected by the flood. The results provide a comprehensive assessment of the flood extent, affected land cover areas, impacted buildings, and the affected population, which is crucial for informing disaster response and management efforts. 
+
+### Problem Statement
+
+In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood's impact is essential for effective disaster response and management. By leveraging remote sensing data and population grid information, this application aims to provide a comprehensive assessment of various aspects of the flood's impact. This enables emergency responders to identify and reach the most severely affected areas, and allows governments or international organizations to plan for long-term recovery and infrastructure restoration. Moreover, the framework of this model can be applied to other regions facing similar challenges.
+
+### End User
+
+**Government departments and international organizations:**
+
+By visualizing flooded areas, affected buildings, and population data, our project enables these departments to quickly and accurately assess the disaster situation. This facilitates effective rescue and reconstruction planning, as well as optimization of future urban development, land use, and drainage systems.
+
+**Insurance companies:**
+
+Our project supports insurance companies by estimating the area of affected buildings, allowing them to accurately assess economic losses and settle claims promptly. This data-driven approach streamlines the claim settlement process and ensures fair compensation for those affected by flood disasters.
+
+### Data
+
+**Sentinel-1 Satellite Image:** [Sentinel-1](https://developers.google.com/earth-engine/guides/sentinel1) collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to Detect flood coverage.
+
+**Sentinel-2 Satellite Image:** [Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/sentinel-2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. 
+
+**Land Classification:** [ESA WorldCover 10m v200](https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200#description)
+ESA WorldCover10m contains 11 land cover classes based on Sentinel-1 and Sentinel-2 data.
+
+**Population:** [GHSL: Global population surfaces 1975-2030](https://developers.google.com/earth-engine/datasets/catalog/JRC_GHSL_P2023A_GHS_POP) contains the spatial distribution of residential population, expressed as the absolute number of inhabitants of the cell.  
+
+### Methodology
+
+**Flood extent mapping: **
+
+The areas affected by the flood are identified by calculating the difference between  pre-flood and post-flood images. 
+
+**Land cover impact assessment:**
+ By overlaying the flood extent layer with the land cover, the affected built-up areas and croplands are assessed.
+
+**Building damage assessment: **
+
+The random forest classification algorithm is applied to the Sentinel-2 multispectral imagery to extract buildings within the built-up areas. The accuracy is evaluated using a confusion matrix.
+
+**Population impact assessment: **
+
+By overlaying the flood extent map with the population grid, the application calculates the total number of individuals residing within the inundated areas.
+
+### Interface
+
+Users will be able to interact with the map and perform the following actions: 
+
+1. Draw an Area of Interest (AOI): Users can draw a polygon on the map to define a specific area they want to analyze. 
+
+2. Obtain flood impact information: the application will process the data within the selected area and display the key indicators in the results panel, including Estimated flood extent, Damaged Built-Up Areas, Damaged Crop Land Areas, Estimated Damaged Buildings Land Area, Estimated Affected Population. 
+
+3. Visualization:  The map will display the corresponding visual representations of this information within the AOI.
+
+## The Application
+
+This is our Earth Engine application.
+
+::: column-page
+<iframe src="https://hanmengyuan826.users.earthengine.app/view/flooddamage" width="100%" height="700px">
+
+</iframe>
+:::
+
+## How it Works
+### Analysis
+**1. Flood Area Analysis**
+
+1.1 Data Preprocessing
+
+We imported the administrative boundary data of Al Marj region and filtered the area of interest (AOI). 
+
+``` js
+// Import the administrative boundary of Libya and filter the target region (Al Marj) as the area of interest (AOI)
+var admin = ee.FeatureCollection("projects/ee-hanmengyuan9/assets/libya");
+var geometry = admin.filter(ee.Filter.eq('shapeName', 'Al Marj'));
+Map.addLayer(geometry, {color: 'grey'}, 'Al Marj');
+```
+
+And we selected the Sentinel-1 SAR image collection, set parameters and filter images for the flood periods.
+
+``` js
+// Define the time periods before and after the flood event
+var before_start = '2023-09-01';
+var before_end = '2023-09-15';
+var after_start = '2023-09-23';
+var after_end = '2023-09-30';
+
+// Set sensor parameters for the satellite data collection
+var polarization = ("VH", "VV");
+var pass_direction = "DESCENDING";
+var difference_threshold = 1.00;
+
+// Defining the area of interest based on the filtered geometry
+var aoi = geometry;
+
+// Filtering the satellite image collection based on the specified parameters
+var collection = ee.ImageCollection('COPERNICUS/S1_GRD')
+  .filter(ee.Filter.eq('instrumentMode', 'IW'))
+  .filter(ee.Filter.listContains('transmitterReceiverPolarisation', polarization))
+  .filter(ee.Filter.eq('orbitProperties_pass', pass_direction))
+  .filter(ee.Filter.eq('resolution_meters', 10))
+  .filterBounds(aoi)
+  .select(polarization);
+  
+// Filter the image collection to obtain images from before and after the flood
+var before_collection = collection.filterDate(before_start, before_end);
+var after_collection = collection.filterDate(after_start, after_end);
+
+```
+
+Then, we mosaiced, clipped, and applied speckle noise reduction to the filtered before and after image collections to optimize data quality.
+
+``` js
+// Create a mosaic of selected tiles and clip to study area
+var before = before_collection.mosaic().clip(aoi);
+var after = after_collection.mosaic().clip(aoi);
+
+// Apply reduce the radar speckle by smoothing  
+var smoothing_radius = 50;
+var before_filtered = before.focal_mean(smoothing_radius, 'circle', 'meters');
+var after_filtered = after.focal_mean(smoothing_radius, 'circle', 'meters');
+``` 
+
+
+1.2 Flood Extent Extraction
+
+We extracted the flood extent using threshold segmentation and further optimize the flood extent using surface water data, connectivity analysis, and terrain filtering.
+``` js
+// Calculate the difference between the before and after images
+var difference = after_filtered.divide(before_filtered);
+
+// Apply the predefined difference-threshold and create the flood extent mask 
+var threshold = difference_threshold;
+var difference_binary = difference.gt(threshold);
+
+// Refine flood result using additional datasets
+      
+      // Include JRC layer on surface water seasonality to mask flood pixels from areas
+      // of "permanent" water (where there is water > 10 months of the year)
+      var swater = ee.Image('JRC/GSW1_0/GlobalSurfaceWater').select('seasonality');
+      var swater_mask = swater.gte(10).updateMask(swater.gte(10));
+      
+      // Flooded layer where perennial water bodies (water > 10 mo/yr) is assigned a 0 value
+      var flooded_mask = difference_binary.where(swater_mask,0);
+      // final flooded area without pixels in perennial waterbodies
+      var flooded = flooded_mask.updateMask(flooded_mask);
+      
+      // Compute connectivity of pixels to eliminate those connected to 8 or fewer neighbours
+      // This operation reduces noise of the flood extent product 
+      var connections = flooded.connectedPixelCount();    
+      var flooded = flooded.updateMask(connections.gte(8));
+      
+      // Mask out areas with more than 5 percent slope using a Digital Elevation Model 
+      var DEM = ee.Image('WWF/HydroSHEDS/03VFDEM');
+      var terrain = ee.Algorithms.Terrain(DEM);
+      var slope = terrain.select('slope');
+      var flooded = flooded.updateMask(slope.lt(5));
+``` 
+
+1.3 Flood Area Calculation
+
+We calculated the flood inundation area based on pixel area and regional statistics.
+
+``` js
+// Calculate flood extent area
+// Create a raster layer containing the area information of each pixel 
+var flood_pixelarea = flooded.select(polarization)
+  .multiply(ee.Image.pixelArea());
+
+// Sum the areas of flooded pixels
+// default is set to 'bestEffort: true' in order to reduce computation time, for a more 
+// accurate result set bestEffort to false and increase 'maxPixels'. 
+var flood_stats = flood_pixelarea.reduceRegion({
+  reducer: ee.Reducer.sum(),              
+  geometry: aoi,
+  scale: 10, // native resolution 
+  //maxPixels: 1e9,
+  bestEffort: true
+  });
+
+// Convert the flood extent to hectares (area calculations are originally given in meters)  
+var flood_area_ha = flood_stats
+  .getNumber(polarization)
+  .divide(10000)
+  .round();
+```
+**2. Identify buildings affected by flooding**
+
+2.1  Data preprocessing
+
+The obtained Sentinel-2 image is filtered, processed, cropped, and a preliminary image is generated. A mask is then applied to the data based on NDWI and NDVI thresholds (0.3 and 0.2, respectively) to filter out non-water and low vegetation cover areas.
+
+```js
+// Define an array of band names for Sentinel-2 imagery
+var bands = ['B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B11', 'B12'];
+
+// Create an ImageCollection of Sentinel-2 surface reflectance images
+var sentinel2 = ee.ImageCollection('COPERNICUS/S2_SR')
+  .filter(ee.Filter.date(before_start, after_end)) // Filter images by date range
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10)) // Filter images with less than 10% cloud cover
+  .mean() // Compute the mean value of each pixel across the filtered images
+  .select(bands) // Select the specified bands
+  .clip(geometry); // Clip the resulting image to the specified geometry
+
+// Define visualization parameters for RGB composite
+var s_rgb = {
+  min: 0.0, // Minimum value for stretching the image
+  max: 3000, // Maximum value for stretching the image
+  bands: ['B4', 'B3', 'B2'], // Red, Green, Blue bands for the composite
+  opacity: 1 // Opacity of the layer
+};
+
+// Calculate NDVI (Normalized Difference Vegetation Index)
+var ndvi = sentinel2.normalizedDifference(['B8', 'B4']).select(['nd'], ['ndvi']);
+
+// Calculate NDWI (Normalized Difference Water Index)
+var ndwi = sentinel2.normalizedDifference(['B3', 'B8']).select(['nd'], ['ndwi']);
+
+// Create a masked image based on NDWI and NDVI thresholds and add NDVI band
+var image = sentinel2
+  .updateMask(ndwi.lt(0.3)) // Mask pixels with NDWI less than 0.3
+  .updateMask(ndvi.lt(0.2)) // Mask pixels with NDVI less than 0.2
+  .addBands(ndvi); // Add the NDVI band to the image
+```
+2.2 RF analysis
+
+To improve the accuracy of the training building model, we will classify and identify different features (such as buildings, farmland, deserts, etc.) together by Random Forest.
+
+```js
+var building_points = ee.FeatureCollection.randomPoints(buildings2, 3000).map(function(i) {
+  return i.set({'class': 0});
+});
+var farm_points = ee.FeatureCollection.randomPoints(farmland, 3000).map(function(i) {
+  return i.set({'class': 1});
+});
+var desert_points = ee.FeatureCollection.randomPoints(desert, 3000).map(function(i) {
+  return i.set({'class': 2});
+});
+var water_points = ee.FeatureCollection.randomPoints(water, 3000).map(function(i) {
+  return i.set({'class': 3});
+});
+var road_points = ee.FeatureCollection.randomPoints(road, 3000).map(function(i) {
+  return i.set({'class': 4});
+});
+var parking_points = ee.FeatureCollection.randomPoints(parking, 3000).map(function(i) {
+  return i.set({'class': 5});
+});
+```
+
+Combine the random points and split them into training and validation sets and we used the split ratio equal to 0.7.
+
+```js
+// Combine the random points for each land cover class into a single FeatureCollection
+var sample = ee.FeatureCollection([
+  building_points,
+  farm_points,
+  desert_points,
+  water_points,
+  road_points,
+  parking_points
+])
+.flatten()  // Flatten the FeatureCollection
+.randomColumn(); // Add a random column to the FeatureCollection for splitting
+
+// Define the split ratio for training and validation samples
+var split = 0.7;
+
+// Create training sample by filtering the sample FeatureCollection where the random column is less than the split ratio
+var training_sample = sample.filter(ee.Filter.lt('random', split));
+
+// Create validation sample by filtering the sample FeatureCollection where the random column is greater than or equal to the split ratio
+var validation_sample = sample.filter(ee.Filter.gte('random', split));
+```
+
+Sample the image using the training and validation points and Train a Random Forest classifier using the training samples.
+
+```js
+// Sample the image using the training sample
+var training = image.sampleRegions({
+  collection: training_sample,
+  properties: ['class'],
+  scale: 10,
+});
+
+// Sample the image using the validation sample
+var validation = image.sampleRegions({
+  collection: validation_sample,
+  properties: ['class'],
+  scale: 10
+});
+
+// Train a Random Forest classifier using the training samples
+var model = ee.Classifier.smileRandomForest(400)
+  .train(training, 'class');
+```
+
+Classify the image using the trained model and extract the building class from the prediction.
+
+```js
+// Classify the image using the trained model
+var prediction = image.classify(model);
+
+// Extract the building class from the prediction by masking pixels that are not classified as buildings (class 0)
+var building_prediction = prediction.updateMask(prediction.eq(0));
+```
+
+2.3 Calculate the built-up areas, croplands, buildings footprint and population after the disaster
+
+Import ESA WorldCover into the map and extract cropland and built-up land from it. By intersecting the Build-up land with the identified buildings, we will focus on the disaster situation of the buildings in the built-up area. Finally, the flood data mask was used to obtain the cropland, built-up areas, building footprint and population after the disaster.
+```js
+// Use the ESA WorldCover 10m v200 dataset
+var dataset = ee.ImageCollection('ESA/WorldCover/v200')
+  .first() // Take the first Image
+  .select('Map') // Select the 'Map' band
+  .clip(aoi);
+
+// Get the projection information of ESA WorldCover
+var worldCoverProjection = dataset.projection();
+
+// Reproject the flood layer to the scale of ESA WorldCover
+var flooded_res = flooded.reproject({
+  crs: worldCoverProjection
+});
+
+// Add the ESA WorldCover layer to the map
+var worldCoverVis = {
+  min: 10,
+  max: 100,
+  palette: [
+    '#006400', '#ffbb22', '#ffff4c', '#f096ff', '#fa0000',
+    '#b4b4b4', '#f0f0f0', '#0064c8', '#0096a0', '#00cf75',
+    '#fae6a0'
+  ]
+};
+Map.addLayer(dataset, worldCoverVis, 'ESA WorldCover');
+```js
+
+### User Interface
+1.Create a map instance and Set the center point and zoom level of the map
+```js
+var map = ui.Map();
+map.centerObject(aoi,10.5);
+```
+2.
+The results of the data volt analysis are displayed in the lower right corner of the user interface. This user interface features a panel with a series of informational sections and a legend, organized as follows:
+
+ **Results Section**: At the top of the panel, there is a "Results" header indicating the category of information provided. Below the header, several pieces of information are listed:
+   - **Flood Status**: Dates between which the flood status is reported (`2023-09-23` to `2023-09-30`).
+   - **Estimated Flood Extent**: The area affected by the flood, as estimated from Sentinel-1 imagery, is listed as `1023443 hectares`.
+   - **Damaged Built-Up Areas**: An estimate of the damaged urban area is provided (`2943 hectares`).
+   - **Damaged Crop Land Areas**: The extent of the damage to cropland is reported (`142837 hectares`).
+   - **Estimated Damaged Buildings Land Area**: This section lists the estimated area of damaged buildings (`367 hectares`).
+   - **Estimated Affected Population**: The number of people estimated to be affected by the event (`200094`).
+
+ **Legend**: Below the results and separated by a horizontal line, there is a legend that visually correlates colors with types of areas or statuses:
+   - A **blue** square represents areas affected by the flood.
+   - A **red** square denotes built-up areas.
+   - A **purple** square indicates cropland.
+   - A **darker purple** square is used for damaged buildings.
+
+Each legend item consists of a colored square followed by a text label that describes what the color represents in the context of the map being displayed.
+
+```js
+// Create a vertical panel that acts as a container for the entire right panel
+var rightPanel = ui.Panel({
+  style: {
+    position: 'bottom-right',
+    padding: '8px 15px',
+    width: '250px' // Adjust the width as needed
+  },
+  layout: ui.Panel.Layout.flow('vertical') // Set the panel vertical layout
+});
+
+// Create a panel to display the results
+var results = ui.Panel({
+  style: {
+    padding: '8px',
+    margin: '0 0 8px 0' // Add a bottom margin to separate it from the legend panel
+  }
+});
+
+// Prepare the visualization parameters of the labels
+// Defines visual style parameters for text labels
+var textVis = {
+  'margin':'0px 8px 2px 0px',
+  'fontWeight':'bold'
+};
+var numberVIS = {
+  'margin':'0px 0px 15px 0px', 
+  'color':'bf0f19',
+  'fontWeight':'bold'
+};
+var subTextVis = {
+  'margin':'0px 0px 2px 0px',
+  'fontSize':'12px',
+  'color':'grey'
+};
+
+var titleTextVis = {
+  'margin':'0px 0px 15px 0px',
+  'fontSize': '18px', 
+  'color': '3333ff'
+};
+
+// Create text labels for titles and data
+var title = ui.Label('Results', titleTextVis);
+var text1 = ui.Label('Flood status between:', textVis);
+var number1 = ui.Label(after_start.concat(" and ",after_end), numberVIS);
+
+// The default text label is "Please wait..." Then replace it with the actual data
+var text2 = ui.Label('Estimated flood extent:', textVis);
+var text2_2 = ui.Label('Please wait...', subTextVis);
+dates(after_collection).evaluate(function(val){text2_2.setValue('based on Sentinel-1 imagery '+val)});
+var number2 = ui.Label('Please wait...', numberVIS); 
+flood_area_ha.evaluate(function(val){number2.setValue(val+' hectares')});
+
+//some more data
+var text3 = ui.Label('Damaged Built-Up Areas (Ha):', textVis);
+var number3 = ui.Label('Please wait...', numberVIS);
+damagedBuildUpAreas.evaluate(function(val) {
+  number3.setValue(val + ' hectares');
+});
+
+var text4 = ui.Label('Damaged Crop Land Areas (Ha):', textVis);
+var number4 = ui.Label('Please wait...', numberVIS);
+damagedCropLandAreas.evaluate(function(val) {
+  number4.setValue(val + ' hectares');
+});
+
+var text5 = ui.Label('Estimated Damaged Buildings Land Area (Ha):', textVis);
+var number5 = ui.Label('Please wait...', numberVIS);
+estimatedDamagedBuildings.evaluate(function(val) {
+  number5.setValue(val + ' hectares');
+});
+
+var text6 = ui.Label('Estimated Affected Population:', textVis);
+var number6 = ui.Label('Please wait...', numberVIS);
+estimatedAffectedPopulation.evaluate(function(val) {
+  number6.setValue(val.toString());
+});
+
+results.add(ui.Panel([
+        title,
+        text1,
+        number1,
+        text2,
+        text2_2,
+        number2,
+        text3,
+        number3,
+        text4,
+        number4,
+        text5,
+        number5,
+        text6,
+        number6,
+       ]
+      ));
+      
+      
+// Create a function to generate legend items with colors and labels
+function createLegendItem(color, label) {
+  return ui.Panel({
+    widgets: [
+      ui.Label('', {
+        backgroundColor: color,
+        padding: '8px', // Adjust to fit the size of the legend color block
+        margin: '0 4px 0 0',
+      }),
+      ui.Label(label, {
+        margin: '-8px 0 0 4px',
+        padding: '8px 0px', // Adjust the upper and lower margins of the text to align it vertically
+        fontSize: '12px'
+      })
+    ],
+    layout: ui.Panel.Layout.Flow('horizontal')
+  });
+}
+
+
+// Create a legend panel and add a title
+var legend = ui.Panel({
+  style: {
+    padding: '8px',
+    margin: '0'
+  }
+});
+legend.add(ui.Label('Legend', {fontWeight: 'bold', fontSize: '16px', margin: '0 0 4px 0'}));
+
+// Create a legend item using a function and add it to the legend panel
+legend.add(createLegendItem('blue', 'Flood'));
+legend.add(createLegendItem('#fa0000', 'Built-up'));
+legend.add(createLegendItem('#f096ff', 'CropLand'));
+legend.add(createLegendItem('purple', 'Damaged Building'));
+
+// Add a splitter between the results panel and the Legend panel
+var separatorLine = ui.Panel({
+  style: {
+    height: '2px',
+    backgroundColor: 'black',
+    margin: '8px 0'
+  }
+});
+
+// Add the results panel and Legend panel to the right panel container
+rightPanel.add(results);
+rightPanel.add(separatorLine); 
+rightPanel.add(legend);
+
+// Adds the entire right panel to the map interface
+Map.add(rightPanel);
+```
+
+
+## Link to this project
+https://github.com/MengyuanHan1/BigData/tree/main
