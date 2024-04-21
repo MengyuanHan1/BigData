@@ -309,10 +309,5 @@ var building_prediction = prediction.updateMask(prediction.eq(0));
 ```
 
 
-
-
-You can include images:
-
-![Pixelwise T-Test, 2018](images/beirut_change_2020.jpg)
-
-and math: $$ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}}} $$
+## Link to this project
+https://github.com/MengyuanHan1/BigData/tree/main
