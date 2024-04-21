@@ -58,10 +58,10 @@ Users will be able to interact with the map and perform the following actions:
 
 ## The Application
 
-Replace the link below with the link to your application.
+This is our Earth Engine application.
 
 ::: column-page
-<iframe src="https://ollielballinger.users.earthengine.app/view/turkey-earthquake" width="100%" height="700px">
+<iframe src="https://hanmengyuan826.users.earthengine.app/view/flooddamage" width="100%" height="700px">
 
 </iframe>
 :::
