@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-This project develops a Google Earth Engine application to assess the impact of the severe flooding that occurred in Al Marj, Libya, in September 2023. The application integrates satellite imagery for flood mapping, land cover data for analyzing affected land cover types, and random forest classification to detect affected buildings. Additionally, it utilizes population grid data to estimate the number of people affected by the flood. The results provide a comprehensive assessment of the flood extent, affected land cover areas, impacted buildings, and the affected population, which is crucial for informing disaster response and management efforts. 
+This project crafts an application within Google Earth Engine to evaluate the repercussions of the substantial flood event that transpired in Al Marj, Libya, during September 2023. The application integrates satellite imagery for flood mapping, land cover data for analyzing affected land cover types, and random forest classification to detect affected buildings. Additionally, it utilizes population grid data to estimate the number of people affected by the flood. The results provide a comprehensive assessment of the flood extent, affected land cover areas, impacted buildings, and the affected population, which is crucial for informing disaster response and management efforts. 
 
 ### Problem Statement
 
