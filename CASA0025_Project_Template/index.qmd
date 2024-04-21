@@ -22,7 +22,9 @@ Our project supports insurance companies by estimating the area of affected buil
 
 What data are you using?
 
-**Sentinel-2 Satellite Image:** [Sentinel-1](https://developers.google.com/earth-engine/guides/sentinel1) collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions.
+**Sentinel-1 Satellite Image:** [Sentinel-1](https://developers.google.com/earth-engine/guides/sentinel1) collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to Detect flood coverage.
+
+**Sentinel-2 Satellite Image:** [Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/sentinel-2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. 
 
 **Land Classification:** [ESA WorldCover 10m v200](https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200#description)
 ESA WorldCover10m contains 11 land cover classes based on Sentinel-1 and Sentinel-2 data.
