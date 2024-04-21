@@ -61,8 +61,10 @@ Replace the link below with the link to your application.
 :::
 
 ## How it Works
-1. Flood Area Analysis
+**1. Flood Area Analysis**
+
 1.1 Data Preprocessing
+
 We imported the administrative boundary data of Al Marj region and filtered the area of interest (AOI). 
 
 ``` js
@@ -180,8 +182,125 @@ var flood_area_ha = flood_stats
   .divide(10000)
   .round();
 ```
+**2. Identify buildings affected by flooding**
 
+2.1  Data preprocessing
 
+The obtained Sentinel-2 image is filtered, processed, cropped, and a preliminary image is generated. A mask is then applied to the data based on NDWI and NDVI thresholds (0.3 and 0.2, respectively) to filter out non-water and low vegetation cover areas.
+
+```js
+// Define an array of band names for Sentinel-2 imagery
+var bands = ['B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B11', 'B12'];
+
+// Create an ImageCollection of Sentinel-2 surface reflectance images
+var sentinel2 = ee.ImageCollection('COPERNICUS/S2_SR')
+  .filter(ee.Filter.date(before_start, after_end)) // Filter images by date range
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10)) // Filter images with less than 10% cloud cover
+  .mean() // Compute the mean value of each pixel across the filtered images
+  .select(bands) // Select the specified bands
+  .clip(geometry); // Clip the resulting image to the specified geometry
+
+// Define visualization parameters for RGB composite
+var s_rgb = {
+  min: 0.0, // Minimum value for stretching the image
+  max: 3000, // Maximum value for stretching the image
+  bands: ['B4', 'B3', 'B2'], // Red, Green, Blue bands for the composite
+  opacity: 1 // Opacity of the layer
+};
+
+// Calculate NDVI (Normalized Difference Vegetation Index)
+var ndvi = sentinel2.normalizedDifference(['B8', 'B4']).select(['nd'], ['ndvi']);
+
+// Calculate NDWI (Normalized Difference Water Index)
+var ndwi = sentinel2.normalizedDifference(['B3', 'B8']).select(['nd'], ['ndwi']);
+
+// Create a masked image based on NDWI and NDVI thresholds and add NDVI band
+var image = sentinel2
+  .updateMask(ndwi.lt(0.3)) // Mask pixels with NDWI less than 0.3
+  .updateMask(ndvi.lt(0.2)) // Mask pixels with NDVI less than 0.2
+  .addBands(ndvi); // Add the NDVI band to the image
+```
+2.2 RF analysis
+
+To improve the accuracy of the training building model, we will classify and identify different features (such as buildings, farmland, deserts, etc.) together by Random Forest.
+
+```js
+var building_points = ee.FeatureCollection.randomPoints(buildings2, 3000).map(function(i) {
+  return i.set({'class': 0});
+});
+var farm_points = ee.FeatureCollection.randomPoints(farmland, 3000).map(function(i) {
+  return i.set({'class': 1});
+});
+var desert_points = ee.FeatureCollection.randomPoints(desert, 3000).map(function(i) {
+  return i.set({'class': 2});
+});
+var water_points = ee.FeatureCollection.randomPoints(water, 3000).map(function(i) {
+  return i.set({'class': 3});
+});
+var road_points = ee.FeatureCollection.randomPoints(road, 3000).map(function(i) {
+  return i.set({'class': 4});
+});
+var parking_points = ee.FeatureCollection.randomPoints(parking, 3000).map(function(i) {
+  return i.set({'class': 5});
+});
+```
+
+Combine the random points and split them into training and validation sets and we used the split ratio equal to 0.7.
+
+```js
+// Combine the random points for each land cover class into a single FeatureCollection
+var sample = ee.FeatureCollection([
+  building_points,
+  farm_points,
+  desert_points,
+  water_points,
+  road_points,
+  parking_points
+])
+.flatten()  // Flatten the FeatureCollection
+.randomColumn(); // Add a random column to the FeatureCollection for splitting
+
+// Define the split ratio for training and validation samples
+var split = 0.7;
+
+// Create training sample by filtering the sample FeatureCollection where the random column is less than the split ratio
+var training_sample = sample.filter(ee.Filter.lt('random', split));
+
+// Create validation sample by filtering the sample FeatureCollection where the random column is greater than or equal to the split ratio
+var validation_sample = sample.filter(ee.Filter.gte('random', split));
+```
+
+Sample the image using the training and validation points and Train a Random Forest classifier using the training samples.
+
+```js
+// Sample the image using the training sample
+var training = image.sampleRegions({
+  collection: training_sample,
+  properties: ['class'],
+  scale: 10,
+});
+
+// Sample the image using the validation sample
+var validation = image.sampleRegions({
+  collection: validation_sample,
+  properties: ['class'],
+  scale: 10
+});
+
+// Train a Random Forest classifier using the training samples
+var model = ee.Classifier.smileRandomForest(400)
+  .train(training, 'class');
+```
+
+Classify the image using the trained model and extract the building class from the prediction.
+
+```js
+// Classify the image using the trained model
+var prediction = image.classify(model);
+
+// Extract the building class from the prediction by masking pixels that are not classified as buildings (class 0)
+var building_prediction = prediction.updateMask(prediction.eq(0));
+```
 
 
 
