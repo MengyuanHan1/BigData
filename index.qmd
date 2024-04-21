@@ -338,10 +338,10 @@ var worldCoverVis = {
   ]
 };
 Map.addLayer(dataset, worldCoverVis, 'ESA WorldCover');
-```js
+```
 
 ### User Interface
-1.Create a map instance and Set the center point and zoom level of the map
+1. Create a map instance and Set the center point and zoom level of the map
 ```js
 var map = ui.Map();
 map.centerObject(aoi,10.5);
