@@ -338,7 +338,115 @@ var worldCoverVis = {
   ]
 };
 Map.addLayer(dataset, worldCoverVis, 'ESA WorldCover');
+
+// Load the dataset
+var worldCover = ee.ImageCollection('ESA/WorldCover/v200').first().clip(geometry);
+var builtUp = worldCover.updateMask(worldCover.eq(50));
+var builtUpVisParams = {
+  palette: ['ff0000'],
+  opacity: 0.7
+};
+
+// Add built-up area layer to the map
+Map.addLayer(builtUp, builtUpVisParams, 'Built-up Area');
+
+// Select cropland category (class code 40 corresponds to Rain-fed cropland)
+var cropland = dataset.eq(40);
+
+// Calculate affected cropland area
+var croplandAffected = flooded_res.updateMask(cropland);
+
+// Select built-up category (class code 50)
+var buildland = dataset.eq(50);
+var class_prediction = prediction.updateMask(prediction.eq(0));
+
+// Mask the classification result using the built-up area image
+var maskedClassPrediction = class_prediction.updateMask(builtUp);
+
+// Add the masked classification result to the map
+Map.addLayer(maskedClassPrediction, {palette:'red'}, 'Built-up Area Prediction');
+
+// ---------- Calculate flood-affected population -----------
+
+// Load population data from GHSL
+var population = ee.Image('JRC/GHSL/P2023A/GHS_POP/2020')
+  .clip(aoi);
+
+// Get GHSL projection
+var GHSLprojection = population.projection();
+
+// Reproject flood layer to GHSL scale
+var flooded_res1 = flooded.reproject({
+  crs: GHSLprojection
+});
+
+// Calculate flood-affected population by applying the flood and population masks
+var floodedPopulation = population
+  .updateMask(flooded_res1)
+  .updateMask(population);
+```
+
+Calculate the area of affected croplands, built-up areas, building footprint, and population.
 ```js
+// ------------------ Cropland ------------
+// Calculate the area of each affected cropland pixel
+var affectedCroplandArea = Affected_Cropland.multiply(ee.Image.pixelArea());
+
+// Sum the area of affected cropland
+var croplandStats = affectedCroplandArea.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: aoi,
+  scale: 10, // Use the original resolution of 10m from the WorldCover dataset
+  maxPixels: 1e9
+}); 
+
+var croplandAreaHectares = ee.Number(croplandStats.get('b1')).divide(10000).round();
+// Calculate the area of each affected pixel in the built-up area
+var affectedBuildlandArea = Affected_Builtup.multiply(ee.Image.pixelArea());
+
+// -------------builtup area ----------------
+
+// Sum the area of the affected built-up area
+var buildlandStats = affectedBuildlandArea.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: aoi,
+  scale: 10, // Use the original resolution of 10m from the WorldCover dataset
+  maxPixels: 1e9
+});
+
+var buildlandAreaHectares = ee.Number(buildlandStats.get('b1')).divide(10000).round();
+
+// ----------   population ----------- 
+
+var populationStats = Flooded_Population.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: aoi,
+  scale: 100, 
+  maxPixels: 1e9
+  //bestEffort: true
+});
+
+var affectedPopulation = ee.Number(populationStats.get('b1')).round();
+
+// ----------- buildings footprint -------------
+
+var buildingFootprintArea = buildingsFootprint.multiply(ee.Image.pixelArea());
+var buildingFootprintAreaSum = buildingFootprintArea.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: aoi,
+  scale: 10, 
+  maxPixels: 1e13
+});
+
+var buildingAreaHectares = ee.Number(buildingFootprintAreaSum.get('b1')).divide(10000).round();
+
+
+//  -------------- output ------------
+print(croplandAreaHectares);
+print(buildlandAreaHectares);
+print(affectedPopulation);
+print(buildingAreaHectares);
+```
 
 ### User Interface
 1.Create a map instance and Set the center point and zoom level of the map
