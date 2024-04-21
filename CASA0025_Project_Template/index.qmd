@@ -2,23 +2,49 @@
 
 ## Project Summary
 
-Fill in the sections below to provide a brief summary of your project. Each section should have no more than 100 words. Do not edit any of the headings.
+This project crafts an application within Google Earth Engine to evaluate the repercussions of the substantial flood event that transpired in Al Marj, Libya, during September 2023. The application integrates satellite imagery for flood mapping, land cover data for analyzing affected land cover types, and random forest classification to detect affected buildings. Additionally, it utilizes population grid data to estimate the number of people affected by the flood. The results provide a comprehensive assessment of the flood extent, affected land cover areas, impacted buildings, and the affected population, which is crucial for informing disaster response and management efforts. 
 
 ### Problem Statement
 
-What is the problem you’re trying to address using this application?
+In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood's impact is essential for effective disaster response and management. By leveraging remote sensing data and population grid information, this application aims to provide a comprehensive assessment of various aspects of the flood's impact. This enables emergency responders to identify and reach the most severely affected areas, and allows governments or international organizations to plan for long-term recovery and infrastructure restoration. Moreover, the framework of this model can be applied to other regions facing similar challenges.
 
 ### End User
 
-Who are you building this application for? How does it address a need this community has?
+**Government departments and international organizations:**
+
+By visualizing flooded areas, affected buildings, and population data, our project enables these departments to quickly and accurately assess the disaster situation. This facilitates effective rescue and reconstruction planning, as well as optimization of future urban development, land use, and drainage systems.
+
+**Insurance companies:**
+
+Our project supports insurance companies by estimating the area of affected buildings, allowing them to accurately assess economic losses and settle claims promptly. This data-driven approach streamlines the claim settlement process and ensures fair compensation for those affected by flood disasters.
 
 ### Data
 
-What data are you using?
+**Sentinel-1 Satellite Image:** [Sentinel-1](https://developers.google.com/earth-engine/guides/sentinel1) collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to Detect flood coverage.
+
+**Sentinel-2 Satellite Image:** [Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/sentinel-2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. 
+
+**Land Classification:** [ESA WorldCover 10m v200](https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200#description)
+ESA WorldCover10m contains 11 land cover classes based on Sentinel-1 and Sentinel-2 data.
+
+**Population:** [GHSL: Global population surfaces 1975-2030](https://developers.google.com/earth-engine/datasets/catalog/JRC_GHSL_P2023A_GHS_POP) contains the spatial distribution of residential population, expressed as the absolute number of inhabitants of the cell.  
 
 ### Methodology
 
-How are you using this data to address the problem?
+**Flood extent mapping: **
+
+The areas affected by the flood are identified by calculating the difference between  pre-flood and post-flood images. 
+
+**Land cover impact assessment:**
+ By overlaying the flood extent layer with the land cover, the affected built-up areas and croplands are assessed.
+
+**Building damage assessment: **
+
+The random forest classification algorithm is applied to the Sentinel-2 multispectral imagery to extract buildings within the built-up areas. The accuracy is evaluated using a confusion matrix.
+
+**Population impact assessment: **
+
+By overlaying the flood extent map with the population grid, the application calculates the total number of individuals residing within the inundated areas.
 
 ### Interface
 
