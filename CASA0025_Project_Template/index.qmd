@@ -308,6 +308,38 @@ var prediction = image.classify(model);
 var building_prediction = prediction.updateMask(prediction.eq(0));
 ```
 
+2.3 Calculate the built-up areas, croplands, buildings footprint and population after the disaster
+
+Import ESA WorldCover into the map and extract cropland and built-up land from it. By intersecting the Build-up land with the identified buildings, we will focus on the disaster situation of the buildings in the built-up area. Finally, the flood data mask was used to obtain the cropland, built-up areas, building footprint and population after the disaster.
+```js
+// Use the ESA WorldCover 10m v200 dataset
+var dataset = ee.ImageCollection('ESA/WorldCover/v200')
+  .first() // Take the first Image
+  .select('Map') // Select the 'Map' band
+  .clip(aoi);
+
+// Get the projection information of ESA WorldCover
+var worldCoverProjection = dataset.projection();
+
+// Reproject the flood layer to the scale of ESA WorldCover
+var flooded_res = flooded.reproject({
+  crs: worldCoverProjection
+});
+
+// Add the ESA WorldCover layer to the map
+var worldCoverVis = {
+  min: 10,
+  max: 100,
+  palette: [
+    '#006400', '#ffbb22', '#ffff4c', '#f096ff', '#fa0000',
+    '#b4b4b4', '#f0f0f0', '#0064c8', '#0096a0', '#00cf75',
+    '#fae6a0'
+  ]
+};
+Map.addLayer(dataset, worldCoverVis, 'ESA WorldCover');
+```js
+
+
 
 ## Link to this project
 https://github.com/MengyuanHan1/BigData/tree/main
