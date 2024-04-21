@@ -1,11 +1,11 @@
-// 数据的是-------------shuju-------------
+
 // Convert the flood extent to hectares (area calculations are originally given in meters)  
 var flood_area_ha = flood_stats
   .getNumber(polarization)
   .divide(10000)
   .round();
   
-// 假设这些变量是通过一些GEE服务器端操作计算出来的， 按照 按照上面 按照上面的按照上面的改一改的 
+// Assuming that these variables are calculated by some GEE server side operation, follow the above according to the above according to the above according to the above change 
 var damagedBuildUpAreas = ee.Number(123); // 示例值
 var damagedCropLandAreas = ee.Number(456); // 示例值
 var estimatedDamagedBuildings = ee.Number(789); // 示例值
@@ -14,82 +14,61 @@ var estimatedAffectedPopulation = ee.Number(1000); // 示例值
   
   
 // 从这里 从这里开始 从这里开始是 从这里开始是准备 从这里开始是准备做UI
+
 // -------- Visualizing Results----------
 
-// 创建一个垂直面板，作为整个右侧面板的容器
+// Create a vertical panel that acts as a container for the entire right panel
 var rightPanel = ui.Panel({
   style: {
     position: 'bottom-right',
     padding: '8px 15px',
-    width: '250px' // 根据需要调整宽度
+    width: '250px' // Adjust the width as needed
   },
-  layout: ui.Panel.Layout.flow('vertical') // 设置面板垂直布局
+  layout: ui.Panel.Layout.flow('vertical') // Set the panel vertical layout
 });
 
-
-// Set position of panel where the results will be displayed 
-
-// var results = ui.Panel({
-//   style: {
-//     position: 'bottom-left',
-//     padding: '8px 15px',
-//     width: '350px'
-//   }
-// });
-
-
-// 创建一个面板用于结果（results）
+// Create a panel to display the results
 var results = ui.Panel({
   style: {
-    // 添加或调整样式
     padding: '8px',
-    margin: '0 0 8px 0' // 添加下边距以和图例面板分隔
+    margin: '0 0 8px 0' // Add a bottom margin to separate it from the legend panel
   }
 });
 
-
-
-
-
-// Prepare the visualization parameters of the labels 
+// Prepare the visualization parameters of the labels
+// Defines visual style parameters for text labels
 var textVis = {
   'margin':'0px 8px 2px 0px',
   'fontWeight':'bold'
-  };
+};
 var numberVIS = {
   'margin':'0px 0px 15px 0px', 
   'color':'bf0f19',
   'fontWeight':'bold'
-  };
+};
 var subTextVis = {
   'margin':'0px 0px 2px 0px',
   'fontSize':'12px',
   'color':'grey'
-  };
+};
 
 var titleTextVis = {
   'margin':'0px 0px 15px 0px',
   'fontSize': '18px', 
-  'font-weight':'', 
   'color': '3333ff'
-  };
+};
 
-// Create labels of the results 
-// Title and time period
+// Create text labels for titles and data
 var title = ui.Label('Results', titleTextVis);
-var text1 = ui.Label('Flood status between:',textVis);
-var number1 = ui.Label(after_start.concat(" and ",after_end),numberVIS);
+var text1 = ui.Label('Flood status between:', textVis);
+var number1 = ui.Label(after_start.concat(" and ",after_end), numberVIS);
 
-// Alternatively, print dates of the selected tiles
-//var number1 = ui.Label('Please wait...',numberVIS); 
-//(after_collection).evaluate(function(val){number1.setValue(val)}),numberVIS;
-
-// Estimated flood extent 
-var text2 = ui.Label('Estimated flood extent:',textVis);
-var text2_2 = ui.Label('Please wait...',subTextVis);
+// The default text label is "Please wait..." Then replace it with the actual data
+var text2 = ui.Label('Estimated flood extent:', textVis);
+var text2_2 = ui.Label('Please wait...', subTextVis);
 dates(after_collection).evaluate(function(val){text2_2.setValue('based on Sentinel-1 imagery '+val)});
-var number2 = ui.Label('Please wait...',numberVIS); 
-flood_area_ha.evaluate(function(val){number2.setValue(val+' hectares')}),numberVIS;
+var number2 = ui.Label('Please wait...', numberVIS); 
+flood_area_ha.evaluate(function(val){number2.setValue(val+' hectares')});
 
 //some more data
 var text3 = ui.Label('Damaged Built-Up Areas (Ha):', textVis);
@@ -116,12 +95,6 @@ estimatedAffectedPopulation.evaluate(function(val) {
   number6.setValue(val.toString());
 });
 
-
-
-
-
-
-
 results.add(ui.Panel([
         title,
         text1,
@@ -141,26 +114,56 @@ results.add(ui.Panel([
       ));
       
       
-      
-      
-      
-// 创建图例面板
+// Create a function to generate legend items with colors and labels
+function createLegendItem(color, label) {
+  return ui.Panel({
+    widgets: [
+      ui.Label('', {
+        backgroundColor: color,
+        padding: '8px', // Adjust to fit the size of the legend color block
+        margin: '0 4px 0 0',
+      }),
+      ui.Label(label, {
+        margin: '-8px 0 0 4px',
+        padding: '8px 0px', // Adjust the upper and lower margins of the text to align it vertically
+        fontSize: '12px'
+      })
+    ],
+    layout: ui.Panel.Layout.Flow('horizontal')
+  });
+}
+
+
+// Create a legend panel and add a title
 var legend = ui.Panel({
   style: {
-    // 添加或调整样式
     padding: '8px',
     margin: '0'
   }
 });
-legend.add(ui.Label('Legend', {fontWeight: 'bold'}));
-legend.add(ui.Label('CropLand', {backgroundColor: 'yellow', padding: '4px'}));
+legend.add(ui.Label('Legend', {fontWeight: 'bold', fontSize: '16px', margin: '0 0 4px 0'}));
 
-// 将结果和图例面板添加到右侧面板容器
+// Create a legend item using a function and add it to the legend panel
+legend.add(createLegendItem('blue', 'Flood'));
+legend.add(createLegendItem('#fa0000', 'Built-up'));
+legend.add(createLegendItem('#f096ff', 'CropLand'));
+legend.add(createLegendItem('purple', 'Damaged Building'));
+
+// Add a splitter between the results panel and the Legend panel
+var separatorLine = ui.Panel({
+  style: {
+    height: '2px',
+    backgroundColor: 'black',
+    margin: '8px 0'
+  }
+});
+
+// Add the results panel and Legend panel to the right panel container
 rightPanel.add(results);
+rightPanel.add(separatorLine); 
 rightPanel.add(legend);
 
-// 将整个右侧面板添加到地图界面
+// Adds the entire right panel to the map interface
 Map.add(rightPanel);
       
-//Map.add(results);
-//--------------------------- 到 到这里UI 结束结束------------------------------
+//--------------------------- UI ------------------------------
