@@ -48,7 +48,13 @@ By overlaying the flood extent map with the population grid, the application cal
 
 ### Interface
 
-How does your application's interface work to address the needs of your end user?
+Users will be able to interact with the map and perform the following actions: 
+
+1. Draw an Area of Interest (AOI): Users can draw a polygon on the map to define a specific area they want to analyze. 
+
+2. Obtain flood impact information: the application will process the data within the selected area and display the key indicators in the results panel, including Estimated flood extent, Damaged Built-Up Areas, Damaged Crop Land Areas, Estimated Damaged Buildings Land Area, Estimated Affected Population. 
+
+3. Visualization:  The map will display the corresponding visual representations of this information within the AOI.
 
 ## The Application
 
