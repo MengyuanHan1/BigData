@@ -481,7 +481,7 @@ Affected Cropland Areas
 ![Affected Cropland Areas](images/Affected Cropland Areas.jpg)
 
 Affected Building Distribution of One City
-![Affected Building Distribution of One City](Affected_Buildings_Footprints2.jpg)
+![Affected Building Distribution of One City](images/Affected_Buildings_Footprints2.jpg)
 
 ### User Interface
 
