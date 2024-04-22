@@ -6,7 +6,14 @@ This project crafts an application within Google Earth Engine to evaluate the re
 
 ### Problem Statement
 
-In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood's impact is essential for effective disaster response and management. By leveraging remote sensing data and population grid information, this application aims to provide a comprehensive assessment of various aspects of the flood's impact. This enables emergency responders to identify and reach the most severely affected areas, and allows governments or international organizations to plan for long-term recovery and infrastructure restoration. Moreover, the framework of this model can be applied to other regions facing similar challenges.
+In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood's impact is essential for effective disaster response and management. This application aims to address the following key research questions: 
+
+1. What is the total area affected by the flooding? 
+
+2. What is the extent of damage affected by the flooding to different land cover types, particularly agricultural land and built-up areas? How the the flooding affact the area of Buildings? 
+
+3. How many people are estimated to be affected by the flooding? 
+
 
 ### End User
 
