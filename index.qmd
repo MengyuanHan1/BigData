@@ -206,6 +206,8 @@ var flood_area_ha = flood_stats
   .divide(10000)
   .round();
 ```
+![Flooded Area](images/Flooded Area.jpg)
+
 **2. Identify buildings affected by flooding**
 
 2.1  Data preprocessing
