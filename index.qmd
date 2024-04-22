@@ -59,13 +59,13 @@ By overlaying the flood extent map with the population grid, the application cal
 
 ### Interface
 
-Users will be able to interact with the perform: 
+Users will be able to interact with the perform:
 
-1. Draw an Area of Interest (AOI): Users can draw a polygon on the map to define a specific area they want to analyze. 
+1.  Draw an Area of Interest (AOI): Users can draw a polygon on the map to define a specific area they want to analyze.
 
-2. Obtain information: The application will process the data within the AOI and display the key indicators in the results panel, including Flood Extent Areas, Damaged Built-Up Areas, Damaged Crop Land Areas, Estimated Affected Population. 
+2.  Obtain information: The application will process the data within the AOI and display the key indicators in the results panel, including Flood Extent Areas, Damaged Built-Up Areas, Damaged Cropland Areas, Estimated Affected Population.
 
-3. Visualization: The map will display visual overlays within the AOI that include Built-Up Areas, Crop Lands and Flood Extents. This setup clearly identifies flood-impacted regions and aids in understanding affected areas.
+3.  Visualization: The map will display visual overlays within the AOI that include Affected Built-Up, Affected Cropland, A ffected Building Footprints, and Flood Areas.  This setup clearly identifies flood-impacted regions.
 
 ## The Application
 
