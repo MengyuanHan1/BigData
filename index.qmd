@@ -71,6 +71,8 @@ Users will be able to interact with the perform:
 
 3.  Visualization: The map will display visual overlays within the AOI that include Affected Built-Up, Affected Cropland, A ffected Building Footprints, and Flood Areas.  This setup clearly identifies flood-impacted regions.
 
+![Interface](images/Interface.png)
+
 ## The Application
 
 This is our Earth Engine application.
