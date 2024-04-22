@@ -57,6 +57,7 @@ The random forest classification algorithm is applied to the Sentinel-2 multispe
 
 By overlaying the flood extent map with the population grid, the application calculates the total number of individuals residing within the inundated areas.
 
+![procedure](procedure.jpg "Procedure")
 ### Interface
 
 Users will be able to interact with the perform:
