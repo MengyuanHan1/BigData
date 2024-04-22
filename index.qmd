@@ -1,4 +1,4 @@
-# CASA00025 Group Project: Al Marj Flood Impact Comprehensive Evaluation System
+# Al Marj Flood Impact Comprehensive Evaluation System
 
 ## Project Summary
 
@@ -206,9 +206,6 @@ var flood_area_ha = flood_stats
   .divide(10000)
   .round();
 ```
-
-The result of flood affect areas shows bellow.
-
 ![Flooded Area](images/Flooded_Area.jpg)
 
 **2. Identify buildings affected by flooding**
@@ -333,7 +330,7 @@ var building_prediction = prediction.updateMask(prediction.eq(0));
 
 **3.Calculate the built-up areas, croplands, buildings footprint and population after the disaster**
 
-Import ESA WorldCover into the map and extract cropland and built-up land from it. By intersecting the Build-up land with the identified buildings, we will focus on the disaster situation of the buildings in the built-up area. Finally, the flood data mask was used to obtain the cropland, built-up areas, building footprint and population after the disaster.
+Import ESA WorldCover into the map and extract cropland and built-up land from it. By intersecting the Build-up land with the identified buildings, we will focus on the disaster situation of the buildings in the built-up area. Finally, the flood data mask was used to obtain the cropland, built-up areas, building spatial distribution and population after the disaster.
 
 ```js
 // Use the ESA WorldCover 10m v200 dataset
@@ -362,7 +359,7 @@ var worldCoverVis = {
 };
 Map.addLayer(dataset, worldCoverVis, 'ESA WorldCover');
 
-// Select cropland category (class code 40 corresponds to Rain-fed cropland)
+// Select cropland category (class code 40 corresponds to cropland)
 var cropland = dataset.eq(40);
 // Calculate affected cropland area
 var croplandAffected = flooded_res.updateMask(cropland);
@@ -371,12 +368,17 @@ var croplandAffected = flooded_res.updateMask(cropland);
 var buildland = dataset.eq(50);
 var class_prediction = prediction.updateMask(prediction.eq(0));
 
-// Mask the classification result using the built-up area image
-var maskedClassPrediction = class_prediction.updateMask(builtUp);
-// Add the masked classification result to the map
-Map.addLayer(maskedClassPrediction, {palette:'red'}, 'Built-up Area Prediction');
+// ---------- Construct Building Spatial Distribution -----------
+// Mask classification results using built-up area masks after resampling
+var maskedClassPrediction = prediction.updateMask(builtUp);
 
-// ---------- Calculate flood-affected population -----------
+// Convert masked classification results to 1-bit depth black and white images
+var maskedClassPredictionBinary = maskedClassPrediction.multiply(255).toByte();
+
+// Add converted classification results to the map
+Map.addLayer(maskedClassPredictionBinary, {min: 0, max: 1}, 'Built-up Area Prediction (Binary)');
+
+// ---------- Load population data -----------
 // Load population data from GHSL
 var population = ee.Image('JRC/GHSL/P2023A/GHS_POP/2020')
   .clip(aoi);
@@ -392,66 +394,94 @@ var floodedPopulation = population
   .updateMask(flooded_res1)
   .updateMask(population);
 ```
-Calculate the area of affected croplands, built-up areas, building footprint, and population.
+
+Construct the function about calculating the area of affected croplands, built-up areas and population.  
 
 ```js
-// ------------------ Cropland ------------
-// Calculate the area of each affected cropland pixel
-var affectedCroplandArea = Affected_Cropland.multiply(ee.Image.pixelArea());
-// Sum the area of affected cropland
-var croplandStats = affectedCroplandArea.reduceRegion({
-  reducer: ee.Reducer.sum(),
-  geometry: aoi,
-  scale: 10, // Use the original resolution of 10m from the WorldCover dataset
-  maxPixels: 1e9
-}); 
+function calculateFloodImpactStats(Affected_Cropland, Affected_Builtup, Flooded_Population, Flooded_Areas,  polarization, aoi) {
+  // Calculate the area of each affected cropland pixel
+  var affectedCroplandArea = Affected_Cropland.multiply(ee.Image.pixelArea());
 
-var croplandAreaHectares = ee.Number(croplandStats.get('b1')).divide(10000).round();
-// Calculate the area of each affected pixel in the built-up area
-var affectedBuildlandArea = Affected_Builtup.multiply(ee.Image.pixelArea());
+  // Calculate the sum of the affected cropland area
+  var croplandStats = affectedCroplandArea.reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: aoi,
+    scale: 10, // Use the original resolution of the WorldCover dataset (10m)
+    maxPixels: 1e9
+  });
 
-// -------------builtup area ----------------
-// Sum the area of the affected built-up area
-var buildlandStats = affectedBuildlandArea.reduceRegion({
-  reducer: ee.Reducer.sum(),
-  geometry: aoi,
-  scale: 10, // Use the original resolution of 10m from the WorldCover dataset
-  maxPixels: 1e9
-});
+  // Convert the affected cropland area from square meters to hectares
+  var croplandAreaHectares = ee.Number(croplandStats.get('b1')).divide(10000).round();
 
-var buildlandAreaHectares = ee.Number(buildlandStats.get('b1')).divide(10000).round();
+  // Calculate the area of each affected built-up land pixel
+  var affectedBuildlandArea = Affected_Builtup.multiply(ee.Image.pixelArea());
 
-// ----------   population ----------- 
+  // Calculate the sum of the affected built-up land area
+  var buildlandStats = affectedBuildlandArea.reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: aoi,
+    scale: 10, // Use the original resolution of the WorldCover dataset (10m)
+    maxPixels: 1e9
+  });
 
-var populationStats = Flooded_Population.reduceRegion({
-  reducer: ee.Reducer.sum(),
-  geometry: aoi,
-  scale: 100, 
-  maxPixels: 1e9
-  //bestEffort: true
-});
+  // Convert the affected built-up land area from square meters to hectares
+  var buildlandAreaHectares = ee.Number(buildlandStats.get('b1')).divide(10000).round();
 
-var affectedPopulation = ee.Number(populationStats.get('b1')).round();
+  // Calculate the number of affected population
+  var populationStats = Flooded_Population.reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: aoi,
+    scale: 100,
+    maxPixels: 1e9
+  });
 
-// ----------- buildings footprint -------------
-var buildingFootprintArea = buildingsFootprint.multiply(ee.Image.pixelArea());
-var buildingFootprintAreaSum = buildingFootprintArea.reduceRegion({
-  reducer: ee.Reducer.sum(),
-  geometry: aoi,
-  scale: 10, 
-  maxPixels: 1e13
-});
+  // Get the affected population count
+  var affectedPopulation = ee.Number(populationStats.get('b1')).round();
 
-var buildingAreaHectares = ee.Number(buildingFootprintAreaSum.get('b1')).divide(10000).round();
+  // Calculate the area of the flooded regions
+  var flood_pixelarea = Flooded_Areas.multiply(ee.Image.pixelArea());
 
+  // Calculate the sum of the flooded area
+  var flood_stats = flood_pixelarea.reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: aoi,
+    scale: 10,
+    bestEffort: true
+  });
 
-//  -------------- output ------------
-print(croplandAreaHectares);
-print(buildlandAreaHectares);
-print(affectedPopulation);
-print(buildingAreaHectares);
+  // Convert the flooded area from square meters to hectares
+  var flood_area_ha = ee.Number(flood_stats.get('b1')).divide(10000).round();
+
+  // Calculate the total area of the selected region
+  var totalArea = ee.Image.pixelArea().reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: aoi,
+    scale: 10,
+    maxPixels: 1e13
+  });
+
+  // Convert the total area from square meters to hectares
+  var totalAreaHectares = ee.Number(totalArea.get('area')).divide(10000).round();
+
+  // Return an object containing all the calculated results
+  return {
+    croplandAreaHectares: croplandAreaHectares,
+    buildlandAreaHectares: buildlandAreaHectares,
+    affectedPopulation: affectedPopulation,
+    floodAreaHectares: flood_area_ha,
+    totalAreaHectares: totalAreaHectares
+  };
+}
 ```
 
+Affected Build-up Areas
+![Affected Build-up Areas](images/Affected Build-up Areas.jpg)
+
+Affected Cropland Areas
+![Affected Cropland Areas](images/Affected Cropland Areas.jpg)
+
+Affected Building Distribution of One City
+![Affected Building Distribution of One City](Affected_Buildings_Footprints2.jpg)
 
 ### User Interface
 
@@ -632,5 +662,7 @@ Map.add(rightPanel);
 ```
 
 
-## Link to this project
-https://github.com/MengyuanHan1/BigData/tree/main
+## Link:
+[Github For the Application](https://github.com/MengyuanHan1/BigData/tree/main)
+[Application](https://hanmengyuan826.users.earthengine.app/view/flooddamage)
+[Application code](https://code.earthengine.google.com/?accept_repo=users%2Fhanmengyuan826%2FGEE&scriptPath=users%2Fhanmengyuan826%2FGEE%3A3Water)
