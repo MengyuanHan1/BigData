@@ -20,7 +20,7 @@ Our project supports insurance companies by estimating the area of affected buil
 
 ### Data
 
-**Sentinel-1 Satellite Image:** [Sentinel-1](https://developers.google.com/earth-engine/guides/sentinel1) collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to Detect flood coverage.
+**Sentinel-1 Satellite Image:** [Sentinel-1](https://developers.google.com/earth-engine/guides/sentinel1) collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to detect flood coverage.
 
 **Sentinel-2 Satellite Image:** [Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/sentinel-2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. 
 
