@@ -206,6 +206,9 @@ var flood_area_ha = flood_stats
   .divide(10000)
   .round();
 ```
+
+The result of flood affect areas shows bellow.
+
 ![Flooded Area](images/Flooded_Area.jpg)
 
 **2. Identify buildings affected by flooding**
