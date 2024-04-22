@@ -57,23 +57,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -111,34 +111,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="casa00025-group-project-al-marj-flood-impact-comprehensive-evaluation-system" class="level1 page-columns page-full">
-<h1>CASA00025 Group Project: Al Marj Flood Impact Comprehensive Evaluation System</h1>
+<section id="casa00025-group-project-title-here" class="level1 page-columns page-full">
+<h1>CASA00025 Group Project Title Here</h1>
 <section id="project-summary" class="level2">
 <h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
 <p>This project crafts an application within Google Earth Engine to evaluate the repercussions of the substantial flood event that transpired in Al Marj, Libya, during September 2023. The application integrates satellite imagery for flood mapping, land cover data for analyzing affected land cover types, and random forest classification to detect affected buildings. Additionally, it utilizes population grid data to estimate the number of people affected by the flood. The results provide a comprehensive assessment of the flood extent, affected land cover areas, impacted buildings, and the affected population, which is crucial for informing disaster response and management efforts.</p>
-<p>!(Study Area)[images/Study Area.png]</p>
 <section id="problem-statement" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
-<p>In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood’s impact is essential for effective disaster response and management. This application aims to address the following key research questions:</p>
-<ol type="1">
-<li><p>What is the total area affected by the flooding?</p></li>
-<li><p>What is the extent of damage affected by the flooding to different land cover types, particularly agricultural land and built-up areas? How the the flooding affact the area of Buildings?</p></li>
-<li><p>How many people are estimated to be affected by the flooding?</p></li>
-</ol>
+<p>In September 2023, severe flooding in Al Marj, Libya, caused significant damage to infrastructure and displaced numerous people. Rapid and accurate assessment of the flood’s impact is essential for effective disaster response and management. By leveraging remote sensing data and population grid information, this application aims to provide a comprehensive assessment of various aspects of the flood’s impact. This enables emergency responders to identify and reach the most severely affected areas, and allows governments or international organizations to plan for long-term recovery and infrastructure restoration. Moreover, the framework of this model can be applied to other regions facing similar challenges.</p>
 </section>
 <section id="end-user" class="level3">
 <h3 class="anchored" data-anchor-id="end-user">End User</h3>
 <p><strong>Government departments and international organizations:</strong></p>
 <p>By visualizing flooded areas, affected buildings, and population data, our project enables these departments to quickly and accurately assess the disaster situation. This facilitates effective rescue and reconstruction planning, as well as optimization of future urban development, land use, and drainage systems.</p>
-<p><strong>Affected communities and the public:</strong></p>
-<p>The spatial distribution map of the flooded area generated by the project can help the affected communities and the public intuitively understand the scope and severity of the flood impact, and take timely countermeasures.</p>
+<p><strong>Insurance companies:</strong></p>
+<p>Our project supports insurance companies by estimating the area of affected buildings, allowing them to accurately assess economic losses and settle claims promptly. This data-driven approach streamlines the claim settlement process and ensures fair compensation for those affected by flood disasters.</p>
 </section>
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
-<p><strong>Sentinel-1 Satellite Image:</strong> <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD">Sentinel-1</a> collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to detect flood coverage.</p>
+<p><strong>Sentinel-1 Satellite Image:</strong> <a href="https://developers.google.com/earth-engine/guides/sentinel1">Sentinel-1</a> collects C-band synthetic aperture radar (SAR) imagery at a variety of polarizations and resolutions. We use it to Detect flood coverage.</p>
 <p><strong>Sentinel-2 Satellite Image:</strong> <a href="https://developers.google.com/earth-engine/datasets/catalog/sentinel-2">Sentinel-2</a> is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency.</p>
-<p><strong>Surface Water:</strong><a href="https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_Metadata">JRC Global Surface Water Metadata</a> contains maps of the location and temporal distribution of surface water. Year-round water is filtered using the JRC Global Water Seasonal Data layer.</p>
-<p><strong>DEM:</strong><a href="https://developers.google.com/earth-engine/datasets/catalog/WWF_HydroSHEDS_03VFDEM#description">WWF HydroSHEDS Void-Filled DEM</a> excludes areas with gradients greater than 5%.</p>
 <p><strong>Land Classification:</strong> <a href="https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200#description">ESA WorldCover 10m v200</a> ESA WorldCover10m contains 11 land cover classes based on Sentinel-1 and Sentinel-2 data.</p>
 <p><strong>Population:</strong> <a href="https://developers.google.com/earth-engine/datasets/catalog/JRC_GHSL_P2023A_GHS_POP">GHSL: Global population surfaces 1975-2030</a> contains the spatial distribution of residential population, expressed as the absolute number of inhabitants of the cell.</p>
 </section>
@@ -151,12 +143,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The random forest classification algorithm is applied to the Sentinel-2 multispectral imagery to extract buildings within the built-up areas. The accuracy is evaluated using a confusion matrix.</p>
 <p><strong>Population impact assessment: </strong></p>
 <p>By overlaying the flood extent map with the population grid, the application calculates the total number of individuals residing within the inundated areas.</p>
-<p><img src="images/procedure.png" class="img-fluid" alt="Procedure"> ### Interface</p>
-<p>Users will be able to interact with the perform:</p>
+</section>
+<section id="interface" class="level3">
+<h3 class="anchored" data-anchor-id="interface">Interface</h3>
+<p>Users will be able to interact with the map and perform the following actions:</p>
 <ol type="1">
 <li><p>Draw an Area of Interest (AOI): Users can draw a polygon on the map to define a specific area they want to analyze.</p></li>
-<li><p>Obtain information: The application will process the data within the AOI and display the key indicators in the results panel, including Total Area, Flood Extent Areas, Damaged Built-Up Areas, Damaged Cropland Areas, Estimated Affected Population.</p></li>
-<li><p>Visualization: The map will display visual overlays within the AOI that include Affected Built-Up, Affected Cropland, A ffected Building Footprints, and Flood Areas. This setup clearly identifies flood-impacted regions.</p></li>
+<li><p>Obtain flood impact information: the application will process the data within the selected area and display the key indicators in the results panel, including Estimated flood extent, Damaged Built-Up Areas, Damaged Crop Land Areas, Estimated Damaged Buildings Land Area, Estimated Affected Population.</p></li>
+<li><p>Visualization: The map will display the corresponding visual representations of this information within the AOI.</p></li>
 </ol>
 </section>
 </section>
@@ -367,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Extract the building class from the prediction by masking pixels that are not classified as buildings (class 0)</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> building_prediction <span class="op">=</span> prediction<span class="op">.</span><span class="fu">updateMask</span>(prediction<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>3.Calculate the built-up areas, croplands, buildings footprint and population after the disaster</strong></p>
+<p>2.3 Calculate the built-up areas, croplands, buildings footprint and population after the disaster</p>
 <p>Import ESA WorldCover into the map and extract cropland and built-up land from it. By intersecting the Build-up land with the identified buildings, we will focus on the disaster situation of the buildings in the built-up area. Finally, the flood data mask was used to obtain the cropland, built-up areas, building footprint and population after the disaster.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Use the ESA WorldCover 10m v200 dataset</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> dataset <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'ESA/WorldCover/v200'</span>)</span>
@@ -395,101 +389,118 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
 <span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(dataset<span class="op">,</span> worldCoverVis<span class="op">,</span> <span class="st">'ESA WorldCover'</span>)<span class="op">;</span></span>
 <span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">// Select cropland category (class code 40 corresponds to Rain-fed cropland)</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cropland <span class="op">=</span> dataset<span class="op">.</span><span class="fu">eq</span>(<span class="dv">40</span>)<span class="op">;</span></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate affected cropland area</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> croplandAffected <span class="op">=</span> flooded_res<span class="op">.</span><span class="fu">updateMask</span>(cropland)<span class="op">;</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co">// Select built-up category (class code 50)</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildland <span class="op">=</span> dataset<span class="op">.</span><span class="fu">eq</span>(<span class="dv">50</span>)<span class="op">;</span></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> class_prediction <span class="op">=</span> prediction<span class="op">.</span><span class="fu">updateMask</span>(prediction<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>))<span class="op">;</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="co">// Mask the classification result using the built-up area image</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> maskedClassPrediction <span class="op">=</span> class_prediction<span class="op">.</span><span class="fu">updateMask</span>(builtUp)<span class="op">;</span></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co">// Add the masked classification result to the map</span></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(maskedClassPrediction<span class="op">,</span> {<span class="dt">palette</span><span class="op">:</span><span class="st">'red'</span>}<span class="op">,</span> <span class="st">'Built-up Area Prediction'</span>)<span class="op">;</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">// Load the dataset</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> worldCover <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'ESA/WorldCover/v200'</span>)<span class="op">.</span><span class="fu">first</span>()<span class="op">.</span><span class="fu">clip</span>(geometry)<span class="op">;</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> builtUp <span class="op">=</span> worldCover<span class="op">.</span><span class="fu">updateMask</span>(worldCover<span class="op">.</span><span class="fu">eq</span>(<span class="dv">50</span>))<span class="op">;</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> builtUpVisParams <span class="op">=</span> {</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  <span class="dt">palette</span><span class="op">:</span> [<span class="st">'ff0000'</span>]<span class="op">,</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">opacity</span><span class="op">:</span> <span class="fl">0.7</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co">// Add built-up area layer to the map</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(builtUp<span class="op">,</span> builtUpVisParams<span class="op">,</span> <span class="st">'Built-up Area'</span>)<span class="op">;</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co">// Select cropland category (class code 40 corresponds to Rain-fed cropland)</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cropland <span class="op">=</span> dataset<span class="op">.</span><span class="fu">eq</span>(<span class="dv">40</span>)<span class="op">;</span></span>
 <span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="co">// ---------- Calculate flood-affected population -----------</span></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="co">// Load population data from GHSL</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> population <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="st">'JRC/GHSL/P2023A/GHS_POP/2020'</span>)</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">clip</span>(aoi)<span class="op">;</span></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="co">// Get GHSL projection</span></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> GHSLprojection <span class="op">=</span> population<span class="op">.</span><span class="fu">projection</span>()<span class="op">;</span></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="co">// Reproject flood layer to GHSL scale</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> flooded_res1 <span class="op">=</span> flooded<span class="op">.</span><span class="fu">reproject</span>({</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>  <span class="dt">crs</span><span class="op">:</span> GHSLprojection</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate flood-affected population by applying the flood and population masks</span></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> floodedPopulation <span class="op">=</span> population</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(flooded_res1)</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(population)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate affected cropland area</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> croplandAffected <span class="op">=</span> flooded_res<span class="op">.</span><span class="fu">updateMask</span>(cropland)<span class="op">;</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="co">// Select built-up category (class code 50)</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildland <span class="op">=</span> dataset<span class="op">.</span><span class="fu">eq</span>(<span class="dv">50</span>)<span class="op">;</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> class_prediction <span class="op">=</span> prediction<span class="op">.</span><span class="fu">updateMask</span>(prediction<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>))<span class="op">;</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="co">// Mask the classification result using the built-up area image</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> maskedClassPrediction <span class="op">=</span> class_prediction<span class="op">.</span><span class="fu">updateMask</span>(builtUp)<span class="op">;</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="co">// Add the masked classification result to the map</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(maskedClassPrediction<span class="op">,</span> {<span class="dt">palette</span><span class="op">:</span><span class="st">'red'</span>}<span class="op">,</span> <span class="st">'Built-up Area Prediction'</span>)<span class="op">;</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="co">// ---------- Calculate flood-affected population -----------</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="co">// Load population data from GHSL</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> population <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="st">'JRC/GHSL/P2023A/GHS_POP/2020'</span>)</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">clip</span>(aoi)<span class="op">;</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="co">// Get GHSL projection</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> GHSLprojection <span class="op">=</span> population<span class="op">.</span><span class="fu">projection</span>()<span class="op">;</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="co">// Reproject flood layer to GHSL scale</span></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> flooded_res1 <span class="op">=</span> flooded<span class="op">.</span><span class="fu">reproject</span>({</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>  <span class="dt">crs</span><span class="op">:</span> GHSLprojection</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate flood-affected population by applying the flood and population masks</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> floodedPopulation <span class="op">=</span> population</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(flooded_res1)</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(population)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Calculate the area of affected croplands, built-up areas, building footprint, and population.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ------------------ Cropland ------------</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate the area of each affected cropland pixel</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> affectedCroplandArea <span class="op">=</span> Affected_Cropland<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Sum the area of affected cropland</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> croplandStats <span class="op">=</span> affectedCroplandArea<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="co">// Use the original resolution of 10m from the WorldCover dataset</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span> </span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> croplandAreaHectares <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(croplandStats<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate the area of each affected pixel in the built-up area</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> affectedBuildlandArea <span class="op">=</span> Affected_Builtup<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">;</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">// -------------builtup area ----------------</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Sum the area of the affected built-up area</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildlandStats <span class="op">=</span> affectedBuildlandArea<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="co">// Use the original resolution of 10m from the WorldCover dataset</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildlandAreaHectares <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(buildlandStats<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Sum the area of affected cropland</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> croplandStats <span class="op">=</span> affectedCroplandArea<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="co">// Use the original resolution of 10m from the WorldCover dataset</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span> </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> croplandAreaHectares <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(croplandStats<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate the area of each affected pixel in the built-up area</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> affectedBuildlandArea <span class="op">=</span> Affected_Builtup<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">// -------------builtup area ----------------</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">// Sum the area of the affected built-up area</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildlandStats <span class="op">=</span> affectedBuildlandArea<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="co">// Use the original resolution of 10m from the WorldCover dataset</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">// ----------   population ----------- </span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildlandAreaHectares <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(buildlandStats<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> populationStats <span class="op">=</span> Flooded_Population<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> </span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">//bestEffort: true</span></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> affectedPopulation <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(populationStats<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co">// ----------   population ----------- </span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> populationStats <span class="op">=</span> Flooded_Population<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> </span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">//bestEffort: true</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="co">// ----------- buildings footprint -------------</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildingFootprintArea <span class="op">=</span> buildingsFootprint<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">;</span></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildingFootprintAreaSum <span class="op">=</span> buildingFootprintArea<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> </span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildingAreaHectares <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(buildingFootprintAreaSum<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> affectedPopulation <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(populationStats<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="co">// ----------- buildings footprint -------------</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildingFootprintArea <span class="op">=</span> buildingsFootprint<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">;</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildingFootprintAreaSum <span class="op">=</span> buildingFootprintArea<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometry</span><span class="op">:</span> aoi<span class="op">,</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> </span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="co">//  -------------- output ------------</span></span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(croplandAreaHectares)<span class="op">;</span></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(buildlandAreaHectares)<span class="op">;</span></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(affectedPopulation)<span class="op">;</span></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(buildingAreaHectares)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> buildingAreaHectares <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(buildingFootprintAreaSum<span class="op">.</span><span class="fu">get</span>(<span class="st">'b1'</span>))<span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">;</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co">//  -------------- output ------------</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(croplandAreaHectares)<span class="op">;</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(buildlandAreaHectares)<span class="op">;</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(affectedPopulation)<span class="op">;</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(buildingAreaHectares)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="user-interface" class="level3">
 <h3 class="anchored" data-anchor-id="user-interface">User Interface</h3>
-<ol type="1">
-<li>Create a map instance and Set the center point and zoom level of the map</li>
-</ol>
+<p>1.Create a map instance and Set the center point and zoom level of the map</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> map <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>map<span class="op">.</span><span class="fu">centerObject</span>(aoi<span class="op">,</span><span class="fl">10.5</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>Display results The results of the data volt analysis are displayed in the lower right corner of the user interface. This user interface features a panel with a series of informational sections and a legend, organized as follows:</li>
+<li>The results of the data volt analysis are displayed in the lower right corner of the user interface. This user interface features a panel with a series of informational sections and a legend, organized as follows:</li>
 </ol>
 <p><strong>Results Section</strong>: At the top of the panel, there is a “Results” header indicating the category of information provided. Below the header, several pieces of information are listed: - <strong>Flood Status</strong>: Dates between which the flood status is reported (<code>2023-09-23</code> to <code>2023-09-30</code>). - <strong>Estimated Flood Extent</strong>: The area affected by the flood, as estimated from Sentinel-1 imagery, is listed as <code>1023443 hectares</code>. - <strong>Damaged Built-Up Areas</strong>: An estimate of the damaged urban area is provided (<code>2943 hectares</code>). - <strong>Damaged Crop Land Areas</strong>: The extent of the damage to cropland is reported (<code>142837 hectares</code>). - <strong>Estimated Damaged Buildings Land Area</strong>: This section lists the estimated area of damaged buildings (<code>367 hectares</code>). - <strong>Estimated Affected Population</strong>: The number of people estimated to be affected by the event (<code>200094</code>).</p>
 <p><strong>Legend</strong>: Below the results and separated by a horizontal line, there is a legend that visually correlates colors with types of areas or statuses: - A <strong>blue</strong> square represents areas affected by the flood. - A <strong>red</strong> square denotes built-up areas. - A <strong>purple</strong> square indicates cropland. - A <strong>darker purple</strong> square is used for damaged buildings.</p>
